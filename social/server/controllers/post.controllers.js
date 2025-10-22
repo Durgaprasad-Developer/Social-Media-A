@@ -129,3 +129,23 @@ export const comment  = async(req , res)=>{
    // text
    // createdAt
 }
+
+export const viewPost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const userId = req.userId;
+
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    if (!post.viewedBy.includes(userId)) {
+      post.viewedBy.push(userId);
+      await post.save();
+    }
+
+    return res.status(200).json({ postId: post._id, views: post.viewedBy.length });
+  } catch (error) {
+    return res.status(500).json({ message: `Cannot update views: ${error}` });
+  }
+};
+
