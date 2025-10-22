@@ -7,6 +7,7 @@ const postSchema = new mongoose.Schema({
   // Date and time
   // Likes
   // Comments
+  // views Count
 
   author: {
     type: mongoose.Schema.Types.ObjectId,
@@ -55,6 +56,11 @@ const postSchema = new mongoose.Schema({
       }
     },
   ],
+  views: {
+  type: Number,
+  default: 0
+},
+
 } , {timestamps:true});
 
 const Post = mongoose.model("post", postSchema);
